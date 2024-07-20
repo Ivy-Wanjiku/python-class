@@ -7,18 +7,19 @@ from teacher.models import Teacher
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model =Student
-        field = "__all__"
+        fields= "__all__"
+   
 class ClassPeriodSerializer(serializers.ModelSerializer):
     class Meta:
         model =ClassPeriod
-        field = "__all__"
+        fields = "__all__"
 
 class CourseSerializer(serializers.ModelSerializer):
     class Meta:
         model =Course
-        field = "__all__"
+        fields = "__all__"
         
 class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model =Teacher
-        field = "__all__"
+        fields = "__all__"

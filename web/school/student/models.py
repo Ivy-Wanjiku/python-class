@@ -9,12 +9,9 @@ class Student(models.Model):
     email=models.EmailField()
     Nationality=models.CharField(max_length=20)
     date_of_birth=models.DateField()
-    code=models.PositiveSmallIntegerField()
     address=models.CharField(max_length=16)
-    age=models.PositiveSmallIntegerField()
     gender=models.CharField(max_length=10)
     bio=models.TextField()
-    grades=models.IntegerField()
     cv=models.TextField()
 
     def __str__(self):
