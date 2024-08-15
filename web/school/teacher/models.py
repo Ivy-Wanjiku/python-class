@@ -1,6 +1,7 @@
 from django.db import models
 
 class Teacher(models.Model):
+    teacher_id=models.SmallIntegerField()
     first_name=models.CharField(max_length=20)
     last_name=models.CharField(max_length=20)
     gender=models.CharField(max_length=10)

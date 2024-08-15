@@ -23,3 +23,7 @@ class TeacherSerializer(serializers.ModelSerializer):
     class Meta:
         model =Teacher
         fields = "__all__"
+class ClassroomSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =ClassPeriod
+        fields = "__all__"
