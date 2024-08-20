@@ -3,7 +3,7 @@ from course.models import Course
 
 class Student(models.Model):
     coursename=models.ManyToManyField(Course)
-    student_id=models.SmallIntegerField()
+    name=models.CharField(max_length=20)
     first_name=models.CharField(max_length=20)
     last_name=models.CharField(max_length=20)
     image=models.ImageField()
