@@ -1,6 +1,7 @@
 
 from datetime import timedelta, timezone
 from django.shortcuts import render
+from django.utils import timezone
 from rest_framework.views import APIView
 from classperiod.models import ClassPeriod
 from classroom.models import Classroom
@@ -68,13 +69,11 @@ class ClassPeriodListView(APIView):
         end_time = request.query_params.get("end_time")
         start_time = request.query_params.get("start_time")
         if end_time:
-            classperiod = classperiod.filter(first_name=end_time)
+            classperiod = classperiod.filter(end_time=end_time)
         if start_time:
-            students = students.filter()
+            students = students.filter(start_time=start_time)
         serializer = MinimalStudentSerializer(students, many=True)
         return Response(serializer.data)
-
-
 
     def post(self, request):
         serializer = ClassPeriodSerializer(data=request.data)
@@ -180,22 +179,39 @@ class TeacherDetailView(APIView):
         teacher.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+# class WeeklyTimetableView(APIView):
+#     def get(self, request):
+#         now = timezone.now()
+#         start_of_week = now - timedelta(days=now.weekday())
+#         end_of_week = start_of_week + timedelta(days=6)
+
+#         class_periods = ClassPeriod.objects.filter(
+#             start_time__gte=start_of_week,
+#             end_time__lte=end_of_week
+#         )
+
+#         timetable_data = {
+#             "start_of_week": start_of_week.isoformat(),
+#             "end_of_week": end_of_week.isoformat(),
+#             "class_periods": ClassPeriodSerializer(class_periods, many=True).data
+#         }
+#         return Response(timetable_data, status=status.HTTP_200_OK)
+
 class WeeklyTimetableView(APIView):
     def get(self, request):
         now = timezone.now()
-        start_of_week = now - timedelta(days=now.weekday())
-        end_of_week = start_of_week + timedelta(days=6)
-
+        start_of_week = now - timedelta(days=now.weekday()) 
+        end_of_week = start_of_week + timedelta(days=6)  
         class_periods = ClassPeriod.objects.filter(
             start_time__gte=start_of_week,
             end_time__lte=end_of_week
         )
-
         timetable_data = {
             "start_of_week": start_of_week.isoformat(),
             "end_of_week": end_of_week.isoformat(),
             "class_periods": ClassPeriodSerializer(class_periods, many=True).data
         }
+
         return Response(timetable_data, status=status.HTTP_200_OK)
 
 class ClassroomDetailView(APIView):
